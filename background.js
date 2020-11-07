@@ -65,9 +65,15 @@ function showMessage(title, message) {
         "message": message
       });
 }
-function onClick() {
+function playCurrentUrl() {
     browser.tabs.query({currentWindow: true, active: true})
         .then((tabs) => viewArdByUrl(tabs[0].url));
 }
   
-browser.browserAction.onClicked.addListener(onClick);
+browser.browserAction.onClicked.addListener(playCurrentUrl);
+
+browser.commands.onCommand.addListener(function(command) {
+    if (command == "play") {
+      playCurrentUrl();
+    }
+  });

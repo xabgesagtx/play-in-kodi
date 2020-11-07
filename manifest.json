@@ -31,6 +31,15 @@
     "browser_style": true
   },
 
+  "commands": {
+    "play": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+K"
+      },
+      "description": "Play current URL in Kodi"
+    }
+  },
+
   "browser_specific_settings": {
     "gecko": {
       "id": "play-in-kodi@example.com"
