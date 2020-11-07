@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+  "name": "Play in Kodi",
+  "version": "0.1",
+
+  "description": "Plays a video in kodi",
+
+  "icons": {
+    "128": "icons/icon-128.png"
+  },
+
+  "permissions": [
+    "*://*/*",
+    "webRequest",
+    "notifications",
+    "tabs",
+    "storage"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/icon-128.png",
+    "default_title": "Play in Kodi"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "play-in-kodi@example.com"
+    }
+  }
+}
