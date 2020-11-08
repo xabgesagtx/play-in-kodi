@@ -23,7 +23,7 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["converters.js","background.js"]
   },
 
   "options_ui": {

@@ -29,19 +29,14 @@ function viewInKodi(pluginUrl) {
         .catch(e => showMessage("Failed to view in kodi", `Failed to start video: ${e.message}`));
 }
 
-function viewArdByUrl(url) {
-    return fetch(url)
-        .then(response => response.text())
-        .then(text => text.match("contentId\":(\\d+)"))
-        .then(match => {
-            if (match) {
-                const contentId = match[1];
-                const pluginUrl = `plugin://plugin.video.ardmediathek_de/?mode=libArdPlay&documentId=${contentId}`
-                viewInKodi(pluginUrl)
-            } else {
-                showMessage("Failed to play ARD video", "Could not find contentId");
-            }
-        })
+function viewUrl(url) {
+    const matchingConverter = converters.find(converter => converter.matches(url));
+    if (matchingConverter) {
+        return matchingConverter.pluginUrl(url)
+            .then(pluginUrl => viewInKodi(pluginUrl))
+    } else {
+        showMessage("Failed to play video", `Could not find converter for url: ${url}`);
+    }
 }
 
 function loadSettings() {
@@ -67,7 +62,8 @@ function showMessage(title, message) {
 }
 function playCurrentUrl() {
     browser.tabs.query({currentWindow: true, active: true})
-        .then((tabs) => viewArdByUrl(tabs[0].url));
+        .then((tabs) => viewUrl(tabs[0].url))
+        .catch(e => showMessage("Failed to play video", e.message))
 }
   
 browser.browserAction.onClicked.addListener(playCurrentUrl);
